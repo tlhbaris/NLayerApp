@@ -5,7 +5,7 @@ namespace NLayer.Core.Repositories
     public interface IGenericRepository<T> where T : class 
     {
         Task<T> GetByIdAsync(int id);
-        IQueryable<T> GetAll(Expression<Func<T, bool>> expression);
+        IQueryable<T> GetAll();
         // IQueryable yazmış olduğumuz sorgular direk veritabanına gitmez tolist vb. kullandığımızda veritabanına gider.Daha performanslı çalışır.
         IQueryable<T> Where(Expression<Func<T, bool>> expression);
         Task<bool> AnyAsync(Expression<Func<T, bool>> expression);
