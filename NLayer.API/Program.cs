@@ -16,7 +16,7 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
 
 builder.Services.AddControllers(options => { options.Filters.Add(new ValidateFilterAttribute()); }) //Global olarak tüm controllerlara  bu filter uygulanabilicek.
                 .AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<ProductDtoValidator>()); //FluentValidation ekleniyor.
@@ -67,7 +67,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UserCustomException();
+app.UseCustomException();
 
 app.UseAuthorization();
 
