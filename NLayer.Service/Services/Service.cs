@@ -1,15 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using NLayer.Core.Repositories;
 using NLayer.Core.Services;
 using NLayer.Core.UnitOfWorks;
 using NLayer.Service.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NLayer.Service.Services
 {
@@ -19,10 +13,10 @@ namespace NLayer.Service.Services
         private readonly IGenericRepository<T> _repository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public Service(IGenericRepository<T> repository,IUnitOfWork unitOfWork)
+        public Service(IGenericRepository<T> repository, IUnitOfWork unitOfWork)
         {
-            _repository= repository;
-            _unitOfWork= unitOfWork;
+            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<T> AddAsync(T entity)
@@ -30,7 +24,7 @@ namespace NLayer.Service.Services
             await _repository.AddAsync(entity);
             await _unitOfWork.CommitAsync();  //Burada savechanges() çalışır ve efcore burada id atamasını yapar.
             return entity;
-              
+
         }
 
         public async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities)
@@ -38,7 +32,7 @@ namespace NLayer.Service.Services
             await _repository.AddRangeAsync(entities);
             await _unitOfWork.CommitAsync();
             return entities;
-            
+
         }
 
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> expression)
@@ -53,7 +47,7 @@ namespace NLayer.Service.Services
 
         public async Task<T> GetByIdAsync(int id)
         {
-            var hasProduct =  await _repository.GetByIdAsync(id);
+            var hasProduct = await _repository.GetByIdAsync(id);
             if (hasProduct == null)
             {
                 throw new NotFoundException($"{typeof(T).Name}({id}) not found");
@@ -70,7 +64,7 @@ namespace NLayer.Service.Services
 
         public async Task RemoveRangeAsync(IEnumerable<T> entities)
         {
-             _repository.RemoveRange(entities);
+            _repository.RemoveRange(entities);
             await _unitOfWork.CommitAsync();
         }
 
